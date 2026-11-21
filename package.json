@@ -1,0 +1,3 @@
+{ "name": "non-aarush-profile", "private": true, "scripts": {
+  "build": "node scripts/build-static.js", "embed": "node scripts/embed-font.js",
+  "stats": "node scripts/generate-stats.js", "stats:demo": "node scripts/generate-stats.js --demo" } }

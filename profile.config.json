@@ -1,0 +1,9 @@
+{
+  "USER": "Non-Aarush",
+  "LEVEL": 1127,
+  "TAGLINE": "Builder. Coder. Bed breaker.",
+  "ABOUT_LINE": "I'm Aarush, a student dev who loves building stuff",
+  "PROJECTS": "bots, web apps and Minecraft tools",
+  "LANGS": "Python, JavaScript and a bit of Java",
+  "TECH": [["Python","green"],["JavaScript","yellow"],["TypeScript","aqua"],["Node.js","dgreen"],["Git","red"],["Linux","gold"],["Java","pink"]]
+}
