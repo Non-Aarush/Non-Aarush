@@ -8,7 +8,9 @@
 
 <br/>
 
-<img src="https://raw.githubusercontent.com/Non-Aarush/Non-Aarush/output/snake-dark.svg" alt="Minecraft contribution snake" width="820"/>
+<img src="https://raw.githubusercontent.com/Non-Aarush/Non-Aarush/output/github-snake-dark.svg" alt="Minecraft contribution snake" width="820"/>
+
+<a href="https://non-aarush.github.io/Non-Aarush/snake-game/"><img src="assets/play.svg" alt="Play Snake" width="380"/></a>
 
 <br/>
 
@@ -18,8 +20,9 @@
 
 </div>
 
+<!-- Edit the chat-style links below (replace the placeholder URLs / delete what you don't use). -->
 <div align="center">
 
-`[MVP++]` **Non-Aarush**`:` [GitHub](https://github.com/Non-Aarush) · [Instagram @aarush.fx](https://instagram.com/aarush.fx)
+`[MVP++]` **Non-Aarush**`:` [GitHub](https://github.com/Non-Aarush) · [Instagram](https://instagram.com/aarush.fx)
 
 </div>

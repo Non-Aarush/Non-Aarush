@@ -40,7 +40,7 @@ async function load() {
       repositories:{totalCount:14,nodes:[
         d('bedwars-overlay',58,9,false,6,5,420,12,1,820,'Java',1), d('discord-bot',14,3,false,4,3,260,9,2,340,'Python',3),
         d('mc-plugin-kit',6,1,false,3,2,180,4,0,210,'Java',12), d('portfolio-site',3,0,false,2,2,95,1,0,1200,'JavaScript',20),
-        d('web-tools',2,0,false,1,1,64,0,0,60,'JavaScript',2), d('dotfiles',1,0,false,0,0,48,0,0,20,'Shell',40),
+        d('snake-game',2,0,false,1,1,64,0,0,60,'JavaScript',2), d('dotfiles',1,0,false,0,0,48,0,0,20,'Shell',40),
         d('old-experiments',0,0,true,0,0,31,0,3,90,'Python',300), d('cli-tools',0,0,false,0,0,22,2,1,35,'Go',9)]}};
   }
   const r = await fetch('https://api.github.com/graphql', {method:'POST',

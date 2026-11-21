@@ -9,13 +9,13 @@ const out = (n, s) => { fs.writeFileSync(path.join(L.ROOT,'assets',n), s); conso
 const U = cfg.USER, LV = cfg.LEVEL, W = 820, MAXC = Math.floor((W-60)/9);
 const fit = (s, n) => { s = String(s); return [...s].length > n ? [...s].slice(0,n-1).join('')+'…' : s; };
 const say = (lvl, r, name, msg, pc) => { const pre = len(chat(lvl,r,name,'',pc)); return chat(lvl, r, name, fit(msg, MAXC-pre), pc); };
-const me = msg => say(LV, 'MVP++', U, msg);
+const me = msg => say(LV, 'MVP++', U, msg, 'dblue');
 
 // ---------- intro.svg : Hypixel Bed Wars lobby chat ----------
 {
   const lines = [
-    [['Sending you to BedWarsLobby12!','green']],
-    [...rank('MVP++'), [' '+U+' joined the lobby!','gold']],
+    [['Sending you to BedWars Lobby 1!','green']],
+    [...rank('MVP++','dblue'), [' '+U+' joined the lobby!','gold']],
     me('hi everyone! o/'),
     say(38,'VIP+','CreeperSlayer','o/ welcome back'),
     say(412,'MVP+','NetherNinja','who is this guy again?'),
@@ -24,7 +24,7 @@ const me = msg => say(LV, 'MVP++', U, msg);
     me('I build ' + cfg.PROJECTS),
     say(205,'VIP','LapisLarry','and what do you code in?'),
     me('I code in ' + cfg.LANGS),
-    [...chat(LV,'MVP++',U,'').slice(0,-1), ['type ','white'], ['/stats','yellow'], [' to view my stats ','white'], ['▼','aqua']],
+    [...chat(LV,'MVP++',U,'','dblue').slice(0,-1), ['type ','white'], ['/stats','yellow'], [' to view my stats ','white'], ['▼','aqua']],
     [['[Larpify] ','aqua'], ['Stats overlay ready. Scroll down!','gray']]
   ];
   const H = 46 + lines.length*26 + 18;
@@ -52,25 +52,34 @@ const me = msg => say(LV, 'MVP++', U, msg);
     `<ellipse cx="106" cy="148" rx="30" ry="5" fill="#000" opacity=".6"><animate attributeName="rx" values="30;24;30" dur="2.2s" repeatCount="indefinite"/></ellipse>` +
     `<g transform="translate(70 62)"><animateTransform attributeName="transform" type="translate" values="70 62;70 54;70 62" dur="2.2s" repeatCount="indefinite"/>${block}</g>` + parts +
     txt(190, 98, [['Non-','white'],['Aarush','green']], {size:44}) +
-    txt(192, 132, [...star(LV), [' ','white'], ...rank('MVP++'), [' '+cfg.TAGLINE,'gray']], {size:15}) +
+    txt(192, 132, [...star(LV), [' ','white'], ...rank('MVP++','dblue'), [' '+cfg.TAGLINE,'gray']], {size:15}) +
     txt(192, 158, [['Currently building something new','dgray']], {size:12});
   out('header.svg', shell(W, H, '', body));
 }
 
 // ---------- stack.svg : blocky tech badges ----------
 {
-  const size = 13, cw = size*.6, h = 32; let x = 28, y = 22, body = '', i = 0;
-  for (const [name, c] of cfg.TECH) {
-    const w = Math.ceil(name.length*cw + 44);
-    if (x + w > W-24) { x = 28; y += h+12; }
-    body += `<g opacity="0"><animate attributeName="opacity" values="0;1" dur="0.01s" begin="${(i*0.12).toFixed(2)}s" fill="freeze"/>` +
-      `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#0d0d0d" stroke="${C[c]||c}" stroke-width="2"/>` +
-      `<rect x="${x+2}" y="${y+2}" width="${h-4}" height="${h-4}" fill="${C[c]||c}" opacity=".9"/>` +
-      `<rect x="${x+5}" y="${y+5}" width="6" height="6" fill="#fff" opacity=".45"/>` +
-      txt(x+h+6, y+h/2+5, [[name,'white']], {size}) + '</g>';
-    x += w + 10; i++;
+  const size = 13, cw = size*.6, h = 32;
+  const badges = cfg.TECH.map(([name, c]) => ({name, c, w: Math.ceil(name.length*cw + 44)}));
+  const rows = []; let row = [], rowW = 0;
+  for (const b of badges) {
+    if (row.length > 0 && 28 + rowW + b.w > W-24) { rows.push({items:row, width:rowW-10}); row = []; rowW = 0; }
+    row.push(b); rowW += b.w + 10;
   }
-  const H = y + h + 22;
+  if (row.length) rows.push({items:row, width:rowW-10});
+  let body = '', i = 0;
+  rows.forEach((r, ri) => {
+    let x = Math.round((W - r.width) / 2), y = 22 + ri * (h + 12);
+    for (const b of r.items) {
+      body += `<g opacity="0"><animate attributeName="opacity" values="0;1" dur="0.01s" begin="${(i*0.12).toFixed(2)}s" fill="freeze"/>` +
+        `<rect x="${x}" y="${y}" width="${b.w}" height="${h}" fill="#0d0d0d" stroke="${C[b.c]||b.c}" stroke-width="2"/>` +
+        `<rect x="${x+2}" y="${y+2}" width="${h-4}" height="${h-4}" fill="${C[b.c]||b.c}" opacity=".9"/>` +
+        `<rect x="${x+5}" y="${y+5}" width="6" height="6" fill="#fff" opacity=".45"/>` +
+        txt(x+h+6, y+h/2+5, [[b.name,'white']], {size}) + '</g>';
+      x += b.w + 10; i++;
+    }
+  });
+  const H = 22 + (rows.length - 1) * (h + 12) + h + 22;
   out('stack.svg', shell(W, H, '', panel(W,H) + body));
 }
 
@@ -88,8 +97,8 @@ const me = msg => say(LV, 'MVP++', U, msg);
 // ---------- footer.svg : Bed Wars kill feed ----------
 {
   const lines = [
-    [['BED DESTRUCTION > ','white'], ['Boredom Bed','red'], [' was destroyed by ','gray'], [U,'gold'], ['!','gray']],
-    [['Boredom','gray'], [' was killed by ','gray'], ['[MVP++] '+U,'gold'], ['. ','gray'], ['FINAL KILL!','aqua']],
+    [['BED DESTRUCTION > ','white'], ['Red Bed','red'], [' was destroyed by ','gray'], ['[MVP','gold'],['++','dblue'],['] '+U,'gold'], ['!','gray']],
+    [['Boredom','gray'], [' was killed by ','gray'], ['[MVP','gold'],['++','dblue'],['] '+U,'gold'], ['. ','gray'], ['FINAL KILL!','aqua']],
     [['Thanks for visiting! ','green'], ['Click a link below to ','gray'], ['/msg','yellow'], [' me.','gray']]
   ];
   const H = 40 + lines.length*26;
