@@ -6,7 +6,7 @@
  *   2. node scripts/embed-font.js
  * It subsets the font to the glyphs we use (needs `pip install fonttools brotli`) to keep each SVG well under 1 MB;
  * without fonttools it embeds the full TTF and warns if the SVGs get big.
- * It also writes fonts/monocraft.src.txt (used by generate-stats.js) and copies the TTF to snake-game/.
+ * It also writes fonts/monocraft.src.txt (used by generate-stats.js).
  */
 const fs = require('fs'), path = require('path'), { execFileSync } = require('child_process');
 const ROOT = path.join(__dirname, '..'), ttf = path.join(ROOT, 'fonts', 'Monocraft.ttf');
@@ -20,7 +20,6 @@ const UNI = 'U+0020-007E,U+00A0-00FF,U+2022,U+2026,U+25B6,U+25BE,U+25BC,U+2588,U
     }
   }
   if (!fs.existsSync(ttf)) { console.error('Could not download Monocraft. Download Monocraft.ttf manually into fonts/ and re-run.'); process.exit(1); }
-  fs.copyFileSync(ttf, path.join(ROOT, 'snake-game', 'Monocraft.ttf'));
 
   let file = ttf, mime = 'font/ttf', fmt = 'truetype';
   for (const [flavor, ext, m] of [['woff2','woff2','font/woff2'], ['woff','woff','font/woff']]) {

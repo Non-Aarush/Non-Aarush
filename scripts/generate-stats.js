@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 /*
- * Builds assets/stats.svg (Kolify-style overlay) from real GitHub data.
+ * Builds assets/stats.svg (Larpify-style overlay) from real GitHub data.
  *   node scripts/generate-stats.js          (needs GH_TOKEN, GH_USER)
  *   node scripts/generate-stats.js --demo   (sample data, no network)
  *
@@ -40,7 +40,7 @@ async function load() {
       repositories:{totalCount:14,nodes:[
         d('bedwars-overlay',58,9,false,6,5,420,12,1,820,'Java',1), d('discord-bot',14,3,false,4,3,260,9,2,340,'Python',3),
         d('mc-plugin-kit',6,1,false,3,2,180,4,0,210,'Java',12), d('portfolio-site',3,0,false,2,2,95,1,0,1200,'JavaScript',20),
-        d('snake-game',2,0,false,1,1,64,0,0,60,'JavaScript',2), d('dotfiles',1,0,false,0,0,48,0,0,20,'Shell',40),
+        d('web-tools',2,0,false,1,1,64,0,0,60,'JavaScript',2), d('dotfiles',1,0,false,0,0,48,0,0,20,'Shell',40),
         d('old-experiments',0,0,true,0,0,31,0,3,90,'Python',300), d('cli-tools',0,0,false,0,0,22,2,1,35,'Go',9)]}};
   }
   const r = await fetch('https://api.github.com/graphql', {method:'POST',
@@ -83,7 +83,7 @@ const CHIP = {BL:'#aa0000', SNI:'#dd3322', AC:'#d63ad6', K:'#4b7bec'};
   const nm = i => (repos[i] ? repos[i].name : '-');
 
   // ---- ticker (typed below the overlay) ----
-  const K = ['[Kolify] ','aqua'];
+  const K = ['[Larpify] ','aqua'];
   const ticker = [
     [[`Sending you to github.com/${USER}!`,'green']],
     [K, ['Loaded ','gray'], [String(u.repositories.totalCount),'yellow'], [' repos, ','gray'], [String(totStars),'yellow'], [' stars, ','gray'], [String(cc.totalCommitContributions),'yellow'], [' commits this year.','gray']],
@@ -127,14 +127,14 @@ const CHIP = {BL:'#aa0000', SNI:'#dd3322', AC:'#d63ad6', K:'#4b7bec'};
   const hdr = '#666';
   let head = `<rect x="22" y="22" width="776" height="340" rx="8" fill="#0b0b0b" stroke="#262626"/>` +
     `<circle cx="40" cy="41" r="4" fill="#55FF55"><animate attributeName="opacity" values="1;.3;1" dur="1.6s" repeatCount="indefinite"/></circle>` +
-    txt(54, 46, [['Kolify','white']], {size:15}) + txt(130, 46, [['|','dgray'],[' Bed Wars','gray']], {size:13}) +
+    txt(54, 46, [['Larpify','white']], {size:15}) + txt(130, 46, [['|','dgray'],[' Bed Wars','gray']], {size:13}) +
     txt(790, 45, [[`github.com/${USER}`,'dgray']], {size:11, anchor:'end'}) +
     `<line x1="23" y1="58" x2="797" y2="58" stroke="#262626"/>` +
     txt(30, 82, [['TAGS',hdr]], {size:10}) + txt(80, 82, [['PLAYER',hdr]], {size:10}) + txt(400, 82, [['STAR',hdr]], {size:10, anchor:'end'});
   COLS.forEach(c => { head += txt(c.x, 82, c.k === 'fkdr' ? [['FKDR ▾','gold']] : [[c.h,hdr]], {size:10, anchor:'end'}); });
   head += `<line x1="23" y1="91" x2="797" y2="91" stroke="#262626"/>` +
     `<line x1="23" y1="${ROW0 + 8*RH}" x2="797" y2="${ROW0 + 8*RH}" stroke="#262626"/>` +
-    txt(34, ROW0 + 8*RH + 20, [[`Lunar Client  |  1.8/logs/latest.log  |  ${repos.length} players`,'#777777']], {size:11});
+    txt(34, ROW0 + 8*RH + 20, [[`Larp Client  |  1.8/logs/latest.log  |  ${repos.length} players`,'#777777']], {size:11});
 
   const body = panel(W,H) + head + rows + tw.body;
   fs.writeFileSync(path.join(L.ROOT,'assets','stats.svg'), shell(W, H, tw.defs, body));

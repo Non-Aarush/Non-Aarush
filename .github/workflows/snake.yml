@@ -16,8 +16,8 @@ jobs:
           github_user_name: ${{ github.repository_owner }}
           # color_dots = contribution levels 0..4 (empty -> emerald). Creeper-green snake + a diamond-blue variant.
           outputs: |
-            dist/github-snake-dark.svg?color_snake=#55FF55&color_dots=#161616,#0e4429,#1f7a3a,#3fbf45,#55FF55&color_dot_border=#0a0a0a
-            dist/github-snake-diamond.svg?color_snake=#55FFFF&color_dots=#161616,#0e4429,#1f7a3a,#3fbf45,#55FF55&color_dot_border=#0a0a0a
+            dist/snake-dark.svg?color_snake=#55FF55&color_dots=#161616,#0e4429,#1f7a3a,#3fbf45,#55FF55&color_dot_border=#0a0a0a
+            dist/snake-diamond.svg?color_snake=#55FFFF&color_dots=#161616,#0e4429,#1f7a3a,#3fbf45,#55FF55&color_dot_border=#0a0a0a
       - uses: crazy-max/ghaction-github-pages@v3.1.0
         with:
           target_branch: output

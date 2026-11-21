@@ -5,11 +5,11 @@ const ROOT = path.join(__dirname, '..', '..');
 
 const C = { green:'#55FF55', aqua:'#55FFFF', red:'#FF5555', pink:'#FF55FF', yellow:'#FFFF55', white:'#FFFFFF',
   gold:'#FFAA00', gray:'#AAAAAA', dgray:'#555555', blue:'#5555FF', dgreen:'#00AA00', daqua:'#00AAAA',
-  dred:'#AA0000', purple:'#AA00AA' };
+  dred:'#AA0000', dblue:'#0000AA', purple:'#AA00AA' };
 const col = c => C[c] || c;
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 // Minecraft text shadow = colour * 0.25
-const shade = h => '#' + [1,3,5].map(i => Math.round(parseInt(h.slice(i,i+2),16)*0.25).toString(16).padStart(2,'0')).join('');
+const shade = h => { if (h.length === 4) h = '#' + [...h.slice(1)].map(c => c + c).join(''); return '#' + [1,3,5].map(i => Math.round(parseInt(h.slice(i,i+2),16)*0.25).toString(16).padStart(2,'0')).join(''); };
 const len = segs => segs.reduce((n,s) => n + [...s[0]].length, 0);
 const FAM = "'Monocraft',monospace";
 
@@ -28,13 +28,17 @@ function star(l) {
   l = Math.floor(l);
   const sym = l >= 3100 ? '✥' : l >= 2100 ? '⚝' : l >= 1100 ? '✪' : '✫', s = String(l), h = Math.floor(l/100)*100;
   if (l >= 1000 && l < 1100) return ['[', ...s, sym, ']'].map((c,i) => [c, RAINBOW[i % 7]]);
+  if (l >= 5000 && l < 5100) { // Eternal Prestige (approximation of the in-game gradient)
+    const g = ['dred','red','gold','yellow','green','aqua','blue','purple'];
+    return ['[', ...s, sym, ']'].map((c,i) => [c, g[i % g.length]]);
+  }
   if (h === 1100) return [['[','gray'],[s,'white'],[sym,'gray'],[']','gray']];
   if (h === 2000) return [['[','gold'],[s,'gold'],[sym,'yellow'],[']','gold']];
   if (h >= 2100)  return [['[','gray'],[s,'white'],[sym,'yellow'],[']','gray']];
   return [[`[${s}${sym}]`, PREST[h] || 'gray']];
 }
 // ---- Hypixel ranks ----
-const RANK = { 'MVP++':{c:'gold',plus:'++',pc:'pink',base:'MVP'}, 'MVP+':{c:'aqua',plus:'+',pc:'red',base:'MVP'},
+const RANK = { 'MVP++':{c:'gold',plus:'+\u200A+',pc:'dblue',base:'MVP'}, 'MVP+':{c:'aqua',plus:'+',pc:'red',base:'MVP'},
   'MVP':{c:'aqua',plus:'',base:'MVP'}, 'VIP+':{c:'green',plus:'+',pc:'gold',base:'VIP'}, 'VIP':{c:'green',plus:'',base:'VIP'} };
 function rank(r, plusColor) {
   const k = RANK[r], s = [[`[${k.base}`, k.c]];

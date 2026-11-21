@@ -25,7 +25,7 @@ const me = msg => say(LV, 'MVP++', U, msg);
     say(205,'VIP','LapisLarry','and what do you code in?'),
     me('I code in ' + cfg.LANGS),
     [...chat(LV,'MVP++',U,'').slice(0,-1), ['type ','white'], ['/stats','yellow'], [' to view my stats ','white'], ['▼','aqua']],
-    [['[Kolify] ','aqua'], ['Stats overlay ready. Scroll down!','gray']]
+    [['[Larpify] ','aqua'], ['Stats overlay ready. Scroll down!','gray']]
   ];
   const H = 46 + lines.length*26 + 18;
   const tw = typewriter(lines, {x:28, y0:46, step:26, size:15, id:'i'});
@@ -53,7 +53,7 @@ const me = msg => say(LV, 'MVP++', U, msg);
     `<g transform="translate(70 62)"><animateTransform attributeName="transform" type="translate" values="70 62;70 54;70 62" dur="2.2s" repeatCount="indefinite"/>${block}</g>` + parts +
     txt(190, 98, [['Non-','white'],['Aarush','green']], {size:44}) +
     txt(192, 132, [...star(LV), [' ','white'], ...rank('MVP++'), [' '+cfg.TAGLINE,'gray']], {size:15}) +
-    txt(192, 158, [['Hypixel Bed Wars Lobby | Minecraft 1.8.9','dgray']], {size:12});
+    txt(192, 158, [['Currently building something new','dgray']], {size:12});
   out('header.svg', shell(W, H, '', body));
 }
 
