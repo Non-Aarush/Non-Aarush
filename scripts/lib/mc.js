@@ -1,5 +1,4 @@
 'use strict';
-// Shared Minecraft / Hypixel helpers: colours, Bed Wars stars, ranks, shadow text, typewriter.
 const fs = require('fs'), path = require('path');
 const ROOT = path.join(__dirname, '..', '..');
 
@@ -8,19 +7,16 @@ const C = { green:'#55FF55', aqua:'#55FFFF', red:'#FF5555', pink:'#FF55FF', yell
   dred:'#AA0000', purple:'#AA00AA' };
 const col = c => C[c] || c;
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-// Minecraft text shadow = colour * 0.25
 const shade = h => '#' + [1,3,5].map(i => Math.round(parseInt(h.slice(i,i+2),16)*0.25).toString(16).padStart(2,'0')).join('');
 const len = segs => segs.reduce((n,s) => n + [...s[0]].length, 0);
 const FAM = "'Monocraft',monospace";
 
-// ---- font: injected between markers by scripts/embed-font.js (fonts/monocraft.src.txt) ----
 function fontCss() {
   let src = '';
   try { src = fs.readFileSync(path.join(ROOT,'fonts','monocraft.src.txt'),'utf8').trim(); } catch (e) {}
   return '/*FONT_START*/' + (src ? `@font-face{font-family:'Monocraft';src:${src};}` : '') + '/*FONT_END*/';
 }
 
-// ---- Bed Wars prestige star: returns colour segments ----
 const RAINBOW = ['red','gold','yellow','green','aqua','pink','purple'];
 const PREST = {0:'gray',100:'white',200:'gold',300:'aqua',400:'dgreen',500:'daqua',600:'dred',700:'pink',800:'blue',
   900:'purple',1200:'yellow',1300:'aqua',1400:'green',1500:'daqua',1600:'red',1700:'pink',1800:'blue',1900:'purple'};
@@ -38,7 +34,7 @@ function star(l) {
   if (h >= 2100)  return [['[','gray'],[s,'white'],[sym,'yellow'],[']','gray']];
   return [[`[${s}${sym}]`, PREST[h] || 'gray']];
 }
-// ---- Hypixel ranks ----
+
 const RANK = { 'MVP++':{c:'gold',plus:'++',pc:'red',base:'MVP'}, 'MVP+':{c:'aqua',plus:'+',pc:'red',base:'MVP'},
   'MVP':{c:'aqua',plus:'',base:'MVP'}, 'VIP+':{c:'green',plus:'+',pc:'gold',base:'VIP'}, 'VIP':{c:'green',plus:'',base:'VIP'} };
 function rank(r, plusColor) {
@@ -50,7 +46,6 @@ const rankColor = r => RANK[r].c;
 const chat = (lvl, r, name, msg, pc) =>
   [...star(lvl), [' ','white'], ...rank(r,pc), [' ','white'], [name, rankColor(r)], [': ','white'], [msg,'white']];
 
-// ---- text with Minecraft drop shadow (a darker copy offset by size/8) ----
 function txt(x, y, segs, o = {}) {
   const size = o.size || 15, w = len(segs) * size * 0.6;
   if (o.anchor === 'end') x -= w; else if (o.anchor === 'middle') x -= w/2;
@@ -60,8 +55,6 @@ function txt(x, y, segs, o = {}) {
   return `<g${o.attr || ''}>${mk(off,true)}${mk(0,false)}</g>`;
 }
 
-// ---- typewriter: each line revealed char-by-char with a clip-path width animation + block cursor ----
-// All animations share one duration T (looping, in sync). Pass o.T to force a common period.
 function typewriter(items, o) {
   const size = o.size || 15, cw = size*0.6, id = o.id || 'tw', dt = o.dt || 0.022, gap = o.gap || 0.45, hold = o.hold || 5;
   let t = o.t0 || 0.6;

@@ -20,7 +20,6 @@
 
 </div>
 
-<!-- Edit the chat-style links below (replace the placeholder URLs / delete what you don't use). -->
 <div align="center">
 
 `[MVP++]` **Non-Aarush**`:` [GitHub](https://github.com/Non-Aarush) · [Instagram](https://instagram.com/aarush.fx)

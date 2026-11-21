@@ -1,13 +1,5 @@
 #!/usr/bin/env node
 'use strict';
-/*
- * Embeds Monocraft (SIL OFL) as a base64 @font-face inside every assets/*.svg.
- *   1. Put Monocraft.ttf in fonts/  (https://github.com/IdreesInc/Monocraft/releases) - or let this script try to download it.
- *   2. node scripts/embed-font.js
- * It subsets the font to the glyphs we use (needs `pip install fonttools brotli`) to keep each SVG well under 1 MB;
- * without fonttools it embeds the full TTF and warns if the SVGs get big.
- * It also writes fonts/monocraft.src.txt (used by generate-stats.js) and copies the TTF to snake-game/.
- */
 const fs = require('fs'), path = require('path'), { execFileSync } = require('child_process');
 const ROOT = path.join(__dirname, '..'), ttf = path.join(ROOT, 'fonts', 'Monocraft.ttf');
 const URLS = ['https://github.com/IdreesInc/Monocraft/releases/latest/download/Monocraft.ttf'];

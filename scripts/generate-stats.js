@@ -1,23 +1,5 @@
 #!/usr/bin/env node
 'use strict';
-/*
- * Builds assets/stats.svg (Larpify-style overlay) from real GitHub data.
- *   node scripts/generate-stats.js          (needs GH_TOKEN, GH_USER)
- *   node scripts/generate-stats.js --demo   (sample data, no network)
- *
- * COLUMN MAPPING (each ROW = one of your repos, top 8 by FKDR):
- *   TAGS   chip: BL=archived, SNI=has open issues, AC=pushed in last 7 days, K=10+ stars (first match wins)
- *   PLAYER [rank] repo-name + primary language in red. Rank by stars: 50+ MVP++, 10+ MVP+, 3+ MVP, 1+ VIP+, else VIP
- *   STAR   stargazers as a Bed Wars prestige star, e.g. [12✫]
- *   FKDR   commits / PRs            (ratio, sorted high to low; arrow = sort column)
- *   WLR    merged PRs / closed (unmerged) PRs
- *   W      total commits on default branch
- *   BBLR   closed issues / open issues
- *   FK     repo size in KB
- *   WS     forks
- *   INDEX  stars*10 + commits*0.5 + forks*5 + merged PRs*3
- * Colours: gray = low, green = good, yellow/orange = better, red/pink = elite.
- */
 const fs = require('fs'), path = require('path');
 const L = require('./lib/mc'); const { txt, star, rank, rankColor, typewriter, panel, shell } = L;
 const USER = process.env.GH_USER || 'Non-Aarush', TOKEN = process.env.GH_TOKEN;
@@ -82,7 +64,6 @@ const CHIP = {BL:'#aa0000', SNI:'#dd3322', AC:'#d63ad6', K:'#4b7bec'};
   const [topLang, topN] = Object.entries(langs).sort((a,b) => b[1]-a[1])[0] || ['Code',0];
   const nm = i => (repos[i] ? repos[i].name : '-');
 
-  // ---- ticker (typed below the overlay) ----
   const K = ['[Larpify] ','aqua'];
   const ticker = [
     [[`Sending you to github.com/${USER}!`,'green']],
@@ -95,7 +76,6 @@ const CHIP = {BL:'#aa0000', SNI:'#dd3322', AC:'#d63ad6', K:'#4b7bec'};
   const tw = typewriter(ticker, {x:28, y0:392, step:22, size:13, id:'k', t0:3.4, hold:7});
   const T = tw.T, kf = v => (v/T).toFixed(4);
 
-  // ---- count-up cell: 6 frames, each visible for a short slice ----
   const F = 6; let t0 = 0;
   const cell = (x, y, make, v, anchor, size = 13) => {
     let s = '';

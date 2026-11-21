@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 'use strict';
-// Builds assets/intro.svg, header.svg, stack.svg, play.svg, footer.svg from profile.config.json.
-// Edit the config (ABOUT_LINE / LANGS / PROJECTS / TECH ...) then run:  node scripts/build-static.js
 const fs = require('fs'), path = require('path');
 const L = require('./lib/mc'); const { C, txt, star, rank, chat, typewriter, panel, shell, len } = L;
 const cfg = JSON.parse(fs.readFileSync(path.join(L.ROOT,'profile.config.json'),'utf8'));
@@ -11,7 +9,6 @@ const fit = (s, n) => { s = String(s); return [...s].length > n ? [...s].slice(0
 const say = (lvl, r, name, msg, pc) => { const pre = len(chat(lvl,r,name,'',pc)); return chat(lvl, r, name, fit(msg, MAXC-pre), pc); };
 const me = msg => say(LV, 'MVP++', U, msg, 'dblue');
 
-// ---------- intro.svg : Hypixel Bed Wars lobby chat ----------
 {
   const lines = [
     [['Sending you to BedWars Lobby 1!','green']],
@@ -32,7 +29,6 @@ const me = msg => say(LV, 'MVP++', U, msg, 'dblue');
   out('intro.svg', shell(W, H, tw.defs, panel(W,H) + tw.body));
 }
 
-// ---------- header.svg : name + bobbing grass block ----------
 {
   const H = 190, G = ['#2f7d1f','#3f9e2f','#4cb83a','#55c444'], D = ['#6b4423','#7a4e2a','#5a3a1d','#8a5a30'];
   const hash = (x,y) => ((x*73856093) ^ (y*19349663)) >>> 0;
@@ -57,7 +53,6 @@ const me = msg => say(LV, 'MVP++', U, msg, 'dblue');
   out('header.svg', shell(W, H, '', body));
 }
 
-// ---------- stack.svg : blocky tech badges ----------
 {
   const size = 13, cw = size*.6, h = 32;
   const badges = cfg.TECH.map(([name, c]) => ({name, c, w: Math.ceil(name.length*cw + 44)}));
@@ -83,7 +78,6 @@ const me = msg => say(LV, 'MVP++', U, msg, 'dblue');
   out('stack.svg', shell(W, H, '', panel(W,H) + body));
 }
 
-// ---------- play.svg : banner image for the snake game link ----------
 {
   const w = 380, h = 92;
   const body = `<rect x="8" y="8" width="${w-16}" height="${h-16}" fill="none" stroke="#55FF55" stroke-width="6" opacity=".35" filter="url(#glow)"><animate attributeName="opacity" values=".15;.55;.15" dur="1.8s" repeatCount="indefinite"/></rect>` +
@@ -94,7 +88,6 @@ const me = msg => say(LV, 'MVP++', U, msg, 'dblue');
   out('play.svg', shell(w, h, '', body));
 }
 
-// ---------- footer.svg : Bed Wars kill feed ----------
 {
   const lines = [
     [['BED DESTRUCTION > ','white'], ['Red Bed','red'], [' was destroyed by ','gray'], ['[MVP','gold'],['++','dblue'],['] '+U,'gold'], ['!','gray']],

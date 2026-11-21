@@ -1,6 +1,6 @@
 name: Generate Snake
 on:
-  schedule: [{ cron: "0 */12 * * *" }]   # every 12 hours
+  schedule: [{ cron: "0 */12 * * *" }]
   workflow_dispatch:
   push:
     branches: [main]
@@ -14,7 +14,6 @@ jobs:
       - uses: Platane/snk/svg-only@v3
         with:
           github_user_name: ${{ github.repository_owner }}
-          # color_dots = contribution levels 0..4 (empty -> emerald). Creeper-green snake + a diamond-blue variant.
           outputs: |
             dist/github-snake-dark.svg?color_snake=#55FF55&color_dots=#161616,#0e4429,#1f7a3a,#3fbf45,#55FF55&color_dot_border=#0a0a0a
             dist/github-snake-diamond.svg?color_snake=#55FFFF&color_dots=#161616,#0e4429,#1f7a3a,#3fbf45,#55FF55&color_dot_border=#0a0a0a

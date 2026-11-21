@@ -1,6 +1,6 @@
 name: Update stats.svg
 on:
-  schedule: [{ cron: "17 3 * * *" }]   # daily 03:17 UTC
+  schedule: [{ cron: "17 3 * * *" }]
   workflow_dispatch:
 permissions:
   contents: write
@@ -15,7 +15,6 @@ jobs:
         run: node scripts/generate-stats.js
         env:
           GH_USER: ${{ github.repository_owner }}
-          # Optional: add a classic PAT (read:user, repo) as secret GH_STATS_TOKEN to include private contributions.
           GH_TOKEN: ${{ secrets.GH_STATS_TOKEN || secrets.GITHUB_TOKEN }}
       - name: Commit if changed
         run: |
